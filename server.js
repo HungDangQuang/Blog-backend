@@ -9,18 +9,18 @@ var app = express()
 var PORT = process.env.PORT || 3000
 
 dotenv.config()
-
+app.listen(PORT, ()=>{
+    console.log('Server is listening on this port:', PORT )
+})
 app.use(cors())
 
 // Configure body-parser middleware
 app.use(bodyParser.urlencoded({extended:false}))
-app.use(bodyParser.json)
+app.use(bodyParser.json())
 
-app.listen(PORT, ()=>{
-    console.log('Server is listening on  this port:', PORT )
-})
 
-mongoose.connect(process.env.DB_CONN, (err)=>{
+
+mongoose.connect(process.env.DB_CONN,(err)=>{
     if(err){
         console.log('Connection failed with err ', err)
     }
@@ -32,3 +32,5 @@ mongoose.connect(process.env.DB_CONN, (err)=>{
 app.get('/', (req,res)=>{
     res.send("Hello, this is a blog website")
 })
+
+require('./app/routes')(app)
