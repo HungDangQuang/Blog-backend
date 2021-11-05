@@ -7,20 +7,26 @@ module.exports = {
         try {
 
             // Get User Info
+            const username = req.body.username
             const email = req.body.email
             const password = req.body.password
 
             // check wether email or passsword is empty
-            if(!email || !password){
-                return res.status(400).json({message:"Email or Password Must Not Be Empty"})
+            if(!email || !password || !username){
+                return res.status(400).json({message:"Email or Password or Username Must Not Be Empty"})
 
             }
 
+            // check wether email is duplicated
+            const query = await Blogger.findOne({email})
+            if(query){
+                return res.status(400).json({message:"This Email Has Already Used"})
+            }
             // hash password
             const hashPass = await bcrypt.hash(password,10)
 
             // create new Blogger
-            const newBlogger = new Blogger({email,password:hashPass})
+            const newBlogger = new Blogger({username,email,password:hashPass})
 
             // save blogger
             await newBlogger.save()
