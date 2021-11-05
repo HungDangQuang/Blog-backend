@@ -37,5 +37,29 @@ module.exports = {
         catch(err){
             next(err)
         }
+    },
+
+    login: async(req,res,next)=>{
+        const email = req.body.email
+        const password = req.body.password
+
+        if(!email || !password){
+            return res.status(400).json({message:"Email or Password Must Not Be Empty"})
+        }
+
+        const user = await Blogger.findOne({email})
+        if(!user){
+            return res.status(401).send("Wrong Username or Password")
+        }
+
+        const isPasswordValid = bcrypt.compareSync(password, user.password)
+
+        if(!isPasswordValid) {
+            return res.status(401).send("Wrong Username or Password")
+        }
+
+        return res.status(200).json({
+            message: "Login Successfully"
+        })
     }
 }
