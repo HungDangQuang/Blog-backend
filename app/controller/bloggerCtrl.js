@@ -1,6 +1,9 @@
 const Blogger = require('../models/blogger')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
+const Token = require('../models/token')
+dotenv.config()
 
 module.exports = {
     register: async(req,res,next)=>{
@@ -40,6 +43,7 @@ module.exports = {
     },
 
     login: async(req,res,next)=>{
+
         const email = req.body.email
         const password = req.body.password
 
@@ -58,6 +62,30 @@ module.exports = {
             return res.status(401).send("Wrong Username or Password")
         }
 
+        const accesstokenLife = 24 * 3600
+        const secret = process.env.SECRET
+
+        const dataForAccessToken = {
+            username: user.username
+        }
+
+        const accessToken = await jwt.sign(dataForAccessToken, secret,{
+            algorithm:"HS256",
+            expiresIn: accesstokenLife
+        })
+
+        if(!accessToken){
+            return res.status(400).send("Login Failed")
+        }
+
+        var storedToken = new Token({
+            token: accessToken,
+            user: user._id,
+            expires: Date.now() + accesstokenLife
+        })
+
+        storedToken.save()
+        
         return res.status(200).json({
             message: "Login Successfully"
         })
