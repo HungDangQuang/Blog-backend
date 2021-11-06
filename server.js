@@ -9,7 +9,7 @@ var app = express()
 
 dotenv.config()
 app.listen(process.env.PORT || 3000, ()=>{
-    console.log('Server is listening on this port:', PORT )
+    console.log('Server is listening on this port' )
 })
 app.use(cors())
 
