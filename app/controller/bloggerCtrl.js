@@ -40,55 +40,59 @@ module.exports = {
         catch(err){
             next(err)
         }
-        res.send("heelo")
     },
 
     login: async(req,res,next)=>{
 
-        const email = req.body.email
-        const password = req.body.password
+        try{
+            const email = req.body.email
+            const password = req.body.password
 
-        if(!email || !password){
+            if(!email || !password){
             return res.status(400).json({message:"Email or Password Must Not Be Empty"})
-        }
+            }
 
-        const user = await Blogger.findOne({email})
-        if(!user){
-            return res.status(401).send("Wrong Username or Password")
-        }
+            const user = await Blogger.findOne({email})
+            if(!user){
+                return res.status(401).send("Wrong Username or Password")
+            }
 
-        const isPasswordValid = bcrypt.compareSync(password, user.password)
+            const isPasswordValid = bcrypt.compareSync(password, user.password)
 
-        if(!isPasswordValid) {
-            return res.status(401).send("Wrong Username or Password")
-        }
+            if(!isPasswordValid) {
+                return res.status(401).send("Wrong Username or Password")
+            }      
 
-        const accesstokenLife = 24 * 3600
-        const secret = process.env.SECRET
+            const accesstokenLife = 24 * 3600
+            const secret = process.env.SECRET
 
-        const dataForAccessToken = {
-            username: user.username
-        }
+            const dataForAccessToken = {
+                username: user.username
+            }
 
-        const accessToken = await jwt.sign(dataForAccessToken, secret,{
-            algorithm:"HS256",
-            expiresIn: accesstokenLife
-        })
+            const accessToken = await jwt.sign(dataForAccessToken, secret,{
+                algorithm:"HS256",
+                expiresIn: accesstokenLife
+            })
 
-        if(!accessToken){
-            return res.status(400).send("Login Failed")
-        }
+            if(!accessToken){
+                return res.status(400).send("Login Failed")
+            }
 
-        var storedToken = new Token({
-            token: accessToken,
-            user: user._id,
-            expires: Date.now() + accesstokenLife
-        })
+            var storedToken = new Token({
+                token: accessToken,
+                user: user._id,
+                expires: Date.now() + accesstokenLife
+            })
 
-        storedToken.save()
+            storedToken.save()
         
-        return res.status(200).json({
-            message: "Login Successfully"
-        })
+            return res.status(200).json({
+                message: "Login Successfully"
+            })
+        }
+        catch(err){
+            next(err)        
+        }
     }
 }
