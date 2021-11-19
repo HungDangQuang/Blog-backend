@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-
+const auth = require('./app/middleware/isAuth')
 var app = express()
 
 
