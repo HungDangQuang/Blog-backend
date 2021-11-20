@@ -43,6 +43,16 @@ module.exports = {
         catch(err){
             res.status(500).json(err)
         }
-    }
+    },
 
+    deleteOne: async(req,res) => {
+        try{
+            let post = await Post.findById(req.params.id)
+            await post.delete()
+            res.status(200).json("Post deleted successfully")
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    }
 }
