@@ -15,7 +15,7 @@ module.exports = {
         }
     },
 
-    getAll: async(req,res,next) => {
+    getAll: async(req,res) => {
         try{
             let posts = await Post.find()
             res.status(200).json(posts)
@@ -25,10 +25,20 @@ module.exports = {
         }
     },
 
-    getOne: async(req,res,next) => {
+    getOne: async(req,res) => {
         try{
             let post = await Post.findById(req.params.id)
             res.status(200).json(post)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    },
+
+    updateOne: async(req,res) => {
+        try {
+            await Post.findByIdAndUpdate(req.params.id,{$set: req.body})
+            res.status(200).json("Blog updated successfully")
         }
         catch(err){
             res.status(500).json(err)
