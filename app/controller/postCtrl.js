@@ -16,8 +16,19 @@ module.exports = {
     },
 
     getAll: async(req,res) => {
+        let username = req.query.username
+        let category = req.query.category
+        let posts
         try{
-            let posts = await Post.find()
+            if(username){
+                posts = await Post.findOne({username: username})
+            }
+            else if (category) {
+                posts = await Post.findOne({categories: category})
+            }
+            else {
+                let posts = await Post.find()
+            }
             res.status(200).json(posts)
         }
         catch(err){
