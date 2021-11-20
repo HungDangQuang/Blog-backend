@@ -6,7 +6,9 @@ module.exports = {
         console.log(req.body)
 
         try{
-            await new Post(req.body)
+            const post = await new Post(req.body)
+            post.save()
+
             res.status(200).json('blog saved sucessfully')
         } catch(err){
             res.status(500).json(err)

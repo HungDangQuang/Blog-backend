@@ -63,23 +63,22 @@ module.exports = {
             }      
 
             const accessTokenLife = "10h";
-            const accessTokenSecret = process.env.SECRET
+            const accessTokenSecret = "ACCESS_TOKEN_SECRET";
 
             const dataForAccessToken = {
-                 username: user.username,
+                username: user.username,
             };
-            const accessToken = await jwt.sign(dataForAccessToken, accessTokenSecret, {
+            const accessToken = jwt.sign(dataForAccessToken, accessTokenSecret, {
                 algorithm: "HS256",
-                expiresIn: '365d'
+                expiresIn: accessTokenLife,
             });
             if (!accessToken) {
                 return res.status(401).send("Login Failed!");
             }
-
             return res.status(200).json({
-                msg: "Login Succeeded.",
+                msg: "Login Success.",
                 accessToken
-            });
+              });
         }
         catch(err){
             next(err)        
