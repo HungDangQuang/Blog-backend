@@ -2,7 +2,7 @@ const {createPost,getAll,getOne,updateOne,deleteOne} = require('../controller/po
 const isAuth = require('../middleware/isAuth')
 
 module.exports = function(app){
-    app.post('/post', isAuth ,createPost)
+    app.post('/post',createPost)
     app.get('/post',getAll)
     app.get('/post/:id', getOne)
     app.patch('/post/:id', updateOne)
