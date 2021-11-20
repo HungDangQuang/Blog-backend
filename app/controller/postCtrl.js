@@ -17,12 +17,16 @@ module.exports = {
 
     getAll: async(req,res,next) => {
         try{
-            let posts = Post.find({})
+            let posts = await Post.find()
             res.status(200).json(posts)
         }
         catch(err){
             res.status(500).json(err)
         }
+    },
+
+    getOne: async(req,res,next) => {
+        
     }
 
 }
