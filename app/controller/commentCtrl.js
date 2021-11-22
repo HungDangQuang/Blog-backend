@@ -12,5 +12,14 @@ module.exports = {
         }
     },
 
+    getAll: async(req,res) => {
+        try{
+            let comments = await Comment.find()
+            res.status(200).json(comments)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    }
 
 }
