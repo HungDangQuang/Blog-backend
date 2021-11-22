@@ -20,6 +20,26 @@ module.exports = {
         catch(err){
             res.status(500).json(err)
         }
-    }
+    },
 
+    getOne: async(req,res) => {
+        try{
+            let comment = await Comment.findById(req.params.id)
+            res.status(200).json(comment)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    },
+
+    deleteOne: async(req,res) => {
+        try{
+            let comment = await Comment.findById(req.params.id)
+            await comment.delete()
+            res.status(200).json("Comment deleted successfully")
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    }
 }
