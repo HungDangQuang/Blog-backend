@@ -19,6 +19,10 @@ const BloggerSchema = mongoose.Schema({
         required: true
     },
 
+    role: {
+        type: String,
+    }
+
 })
 
 module.exports = mongoose.model('blogger',BloggerSchema)

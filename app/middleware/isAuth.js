@@ -1,4 +1,3 @@
-const { func } = require('joi');
 const jwt = require('jsonwebtoken');
 
 module.exports = (request, response, next) => {
@@ -13,6 +12,8 @@ module.exports = (request, response, next) => {
         const accessTokenSecret = "ACCESS_TOKEN_SECRET";
 
         const verified = jwt.verify(token, accessTokenSecret);
+        request.token = verified
+        console.log(request.token.id)
         next();
     } catch (err) {
         console.log(err)

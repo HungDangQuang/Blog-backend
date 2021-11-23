@@ -66,7 +66,7 @@ module.exports = {
             const accessTokenSecret = "ACCESS_TOKEN_SECRET";
 
             const dataForAccessToken = {
-                username: user.username,
+                id: user._id
             };
             const accessToken = jwt.sign(dataForAccessToken, accessTokenSecret, {
                 algorithm: "HS256",

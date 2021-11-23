@@ -37,6 +37,7 @@ module.exports = {
             let comment = await Comment.findById(req.params.id)
             await comment.delete()
             res.status(200).json("Comment deleted successfully")
+            return
         }
         catch(err){
             res.status(500).json(err)

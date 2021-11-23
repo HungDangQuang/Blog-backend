@@ -3,7 +3,7 @@ const isAuth = require('../middleware/isAuth')
 
 module.exports = function(app){
     app.post('/post',createPost)
-    app.get('/post',getAll)
+    app.get('/post',isAuth,getAll)
     app.get('/post/:id', getOne)
     app.patch('/post/:id', updateOne)
     app.delete('/post/:id', deleteOne)
