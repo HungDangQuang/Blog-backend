@@ -83,5 +83,46 @@ module.exports = {
         catch(err){
             next(err)        
         }
+    },
+
+    getAll: async(req,res) => {
+        try{
+            let users = await Blogger.find()
+            res.status(200).json(users)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    },
+
+    getOne: async(req,res) => {
+        try{
+            let user = await Blogger.findById(req.params.id)
+            res.status(200).json(user)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    },
+
+    updateOne: async(req,res) => {
+        try {
+            await Blogger.findByIdAndUpdate(req.params.id,{$set: req.body})
+            res.status(200).json("User updated successfully")
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
+    },
+
+    deleteOne: async(req,res) => {
+        try{
+            let user = await Blogger.findById(req.params.id)
+            await user.delete()
+            res.status(200).json("User deleted successfully")
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
     }
 }
