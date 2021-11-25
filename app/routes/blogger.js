@@ -5,7 +5,7 @@ module.exports = function(app){
     app.post('/register', register)
     app.post('/login', login)
     app.get('/user',isAuth,authorization,getAll)
-    app.get('/user/:id',isAuth,authorization, getOne)
+    app.get('/user/:id',isAuth, getOne)
     app.patch('/user/:id',isAuth,authorization, updateOne)
     app.delete('/user/:id',isAuth,authorization,deleteOne)
 }

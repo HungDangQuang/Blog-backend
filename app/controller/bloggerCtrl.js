@@ -77,7 +77,8 @@ module.exports = {
             }
             return res.status(200).json({
                 msg: "Login Success.",
-                accessToken
+                accessToken,
+                id: user.id
               });
         }
         catch(err){
