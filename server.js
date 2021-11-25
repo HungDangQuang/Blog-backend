@@ -3,6 +3,8 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 const auth = require('./app/middleware/isAuth')
 var app = express()
 
@@ -38,5 +40,30 @@ mongoose.connect(process.env.DB_CONN,(err)=>{
 app.get('/', (req,res)=>{
     res.send("Hello, this is a blog website")
 })
+
+const options = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "Library API",
+        version: "1.0.0",
+        description: "Backend Library API",
+      },
+      servers: [
+        {
+          url: "https://youbo.herokuapp.com/",
+        },
+        {
+          url: "http://localhost:3000/",
+        },
+      ],
+    },
+    apis: ["app/docs/swagger.docs.yml"],
+  };
+  
+  const specs = swaggerJsDoc(options);
+  
+  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
 
 require('./app/routes')(app)

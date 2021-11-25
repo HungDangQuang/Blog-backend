@@ -1,0 +1,357 @@
+paths:
+  /register:
+    post:
+      summary: Register To System
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          summary: Created
+          description: success
+        "409":
+          description: Conflict
+        "500":
+          description: Server Error
+
+  /login:
+    post:
+      summary: Login To System
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          summary: Created
+          description: sucess
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+  /post:
+    post:
+      summary: Create new Post
+      tags:
+        - post
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                picture:
+                  type: string
+                username:
+                  type: string
+                categories:
+                  type: string
+      responses:
+        "201":
+          summary: Created
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+    get:
+      summary: Get All Posts
+      tags:
+        - post
+      responses:
+        "201":
+          summary: Created
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /post/{id}:
+    get:
+      summary: Get One Post Information
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - post
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /post/{postID}:
+    patch:
+      summary: Update Post Information
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: postID
+          schema:
+            type: string
+          required: true
+      tags:
+        - post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                picture:
+                  type: string
+                username:
+                  type: string
+                categories:
+                  type: string
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /post/{objID}:
+    delete:
+      summary: Delete Post Information
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: objID
+          schema:
+            type: string
+          required: true
+      tags:
+        - post
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /user:
+    get:
+      summary: Get All Users
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      responses:
+        "201":
+          summary: Created
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /user/{userid}:
+    get:
+      summary: Get One User
+      parameters:
+        - in: path
+          name: userid
+          schema:
+            type: string
+          required: true
+      tags:
+        - user
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+    
+  /user/{user_ID}:
+    patch:
+      summary: Update User Information
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: user_ID
+          schema:
+            type: string
+          required: true
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+  
+  /user/{uid}:
+    delete:
+      summary: Delete User
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: uid
+          schema:
+            type: string
+          required: true
+      tags:
+        - user
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+  /comment:
+    post:
+      summary: Create new comment
+      tags:
+        - comment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                postID:
+                  type: string
+                date:
+                  type: string
+                comment:
+                  type: string
+      responses:
+        "201":
+          summary: Created
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+        
+  
+    get:
+      summary: Get All Comments
+      tags:
+        - comment
+      responses:
+        "201":
+          summary: Created
+        "500":
+          description: Server Error
+  
+  /comment/{cid}:
+    get:
+      summary: Get One Comment
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: string
+          required: true
+      tags:
+        - comment
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "500":
+          description: Server Error
+
+/comment/{commentID}:
+    delete:
+      summary: Delete Comment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: commentID
+          schema:
+            type: string
+          required: true
+      tags:
+        - comment
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "401":
+          description: Unauthorize
+        "500":
+          description: Server Error
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
