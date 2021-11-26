@@ -42,5 +42,16 @@ module.exports = {
         catch(err){
             res.status(500).json(err)
         }
+    },
+
+    getFromOnePost: async(req,res) => {
+        try{
+            console.log(req.params.id)
+            let comments = await Comment.find({postID:req.params.id}).exec()
+            res.status(200).json(comments)
+        }
+        catch(err){
+            res.status(500).json(err)
+        }
     }
 }

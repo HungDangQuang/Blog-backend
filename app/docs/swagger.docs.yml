@@ -326,6 +326,24 @@ paths:
         "500":
           description: Server Error
 
+  /comments/{poID}:
+    get:
+      summary: Get All Comments From One Post
+      parameters:
+        - in: path
+          name: poID
+          schema:
+            type: string
+          required: true
+      tags:
+        - comment
+      responses:
+        "200":
+          summary: Created
+          description: success
+        "500":
+          description: Server Error
+
 /comment/{commentID}:
     delete:
       summary: Delete Comment
