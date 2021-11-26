@@ -1,10 +1,12 @@
+const { required } = require('joi')
 const mongoose = require('mongoose')
 
 const PostSchema = mongoose.Schema({
 
     title: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
 
     description: {
@@ -14,7 +16,7 @@ const PostSchema = mongoose.Schema({
 
     picture: {
         type: String,
-        required: false
+        required: true
     },
 
     username: {
@@ -22,15 +24,10 @@ const PostSchema = mongoose.Schema({
         required: true,
     },
 
-    categories: {
-        type: String,
-        required: false,
-    },
-
     createdDate: {
         type: Date
     },
 
-})
+},{timestamps: true})
 
 module.exports = mongoose.model('post',PostSchema)

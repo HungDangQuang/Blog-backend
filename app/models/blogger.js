@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const BloggerSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
 
     username: {
         type: String,
@@ -23,6 +23,6 @@ const BloggerSchema = mongoose.Schema({
         default: "user"
     }
 
-})
+}, {timestamps: true})
 
-module.exports = mongoose.model('user',BloggerSchema)
+module.exports = mongoose.model('user',userSchema)
