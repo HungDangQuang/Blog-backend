@@ -4,8 +4,7 @@ const BloggerSchema = mongoose.Schema({
 
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
 
     password: {
@@ -21,8 +20,9 @@ const BloggerSchema = mongoose.Schema({
 
     role: {
         type: String,
+        default: "user"
     }
 
 })
 
-module.exports = mongoose.model('blogger',BloggerSchema)
+module.exports = mongoose.model('user',BloggerSchema)
