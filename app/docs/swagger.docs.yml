@@ -286,7 +286,7 @@ paths:
                 postID:
                   type: string
                 date:
-                  type: string
+                  type: date
                 comment:
                   type: string
       responses:
