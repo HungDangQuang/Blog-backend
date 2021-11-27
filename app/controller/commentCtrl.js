@@ -4,7 +4,7 @@ module.exports = {
     createComment :async(req,res) => {
         try{
             const comment = await new Comment(req.body)
-            comment.save()
+            await comment.save()
             res.status(200).json('Comment saved')
         }
         catch(err){
